@@ -3,7 +3,7 @@ package com.example.mychat
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.databinding.DataBindingUtil
-import com.example.mychat.databinding.ActivityMainBinding
+
 
 class MainActivity : AppCompatActivity() {
 
