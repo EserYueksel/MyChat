@@ -1,20 +1,21 @@
 package com.example.mychat.ui
 
+
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
-import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.fragment.app.activityViewModels
 import com.example.mychat.adapter.ContactAdapter
-import com.example.mychat.data.Repository
+import com.example.mychat.SharedViewModel
 import com.example.mychat.databinding.FragmentHomeBinding
 
-class HomeFragment: Fragment() {
+
+class HomeFragment : Fragment() {
 
     private lateinit var binding: FragmentHomeBinding
-    private lateinit var adapter: ContactAdapter
+    val viewModel: SharedViewModel by activityViewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -27,12 +28,11 @@ class HomeFragment: Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 
-        adapter = ContactAdapter()
-        binding.chatRecycler.adapter = adapter
-        binding.chatRecycler.layoutManager = LinearLayoutManager(requireContext())
+        val contactAdapter = ContactAdapter()
+        binding.homeRv.adapter = contactAdapter
 
-        val contacts = Repository().loadContacts()
-        adapter.submitList(contacts)
+        viewModel.contactList.observe(viewLifecycleOwner) {
+            contactAdapter.submitList(it)
+        }
     }
-
 }
